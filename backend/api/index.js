@@ -76,4 +76,7 @@ app.use((req, res) => {
 });
 
 // ✅ Export for Vercel serverless function
-module.exports = serverless(app);
+const handler = serverless(app);
+
+module.exports = handler;
+module.exports.default = handler;

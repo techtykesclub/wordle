@@ -1,34 +1,26 @@
 {
   "version": 2,
   "name": "wordle-game-backend",
-  "builds": [
+  "rewrites": [
     {
-      "src": "api/index.js",
-      "use": "@vercel/node"
+      "source": "/openai/start",
+      "destination": "/api/start"
+    },
+    {
+      "source": "/health",
+      "destination": "/api/health"
     }
   ],
-  "routes": [
-    {
-      "src": "/health",
-      "dest": "/api/health.js"
+  "functions": {
+    "api/start.js": {
+      "memory": 1024,
+      "maxDuration": 30
     },
-    {
-      "src": "/test",
-      "dest": "/api/index.js"
-    },
-    {
-      "src": "/test-post",
-      "dest": "/api/index.js"
-    },
-    {
-      "src": "/openai/(.*)",
-      "dest": "/api/index.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/api/index.js"
+    "api/health.js": {
+      "memory": 512,
+      "maxDuration": 10
     }
-  ],
+  },
   "env": {
     "NODE_ENV": "production"
   },
