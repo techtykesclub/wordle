@@ -1,16 +1,29 @@
 {
-  "name": "backend",
+  "name": "wordle-game-backend",
   "private": true,
   "type": "commonjs",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "api/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node server-local.js",
+    "start": "node api/index.js",
+    "build": "echo 'No build step needed for serverless'",
+    "deploy": "vercel --prod",
+    "deploy:dev": "vercel",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "echo 'Linting not configured'",
+    "vercel-build": "echo 'Build completed'"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "wordle",
+    "game",
+    "ai",
+    "educational",
+    "kids"
+  ],
+  "author": "Your Name",
   "license": "ISC",
-  "description": "",
+  "description": "AI-powered adaptive word game backend for kids",
   "dependencies": {
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
