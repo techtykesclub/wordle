@@ -36,7 +36,7 @@ export const APP_CONFIG = {
   version: import.meta.env.VITE_APP_VERSION || "1.0.0",
 
   // Base path for routing
-  basePath: import.meta.env.VITE_BASE_PATH || "/game-genie-1/",
+  basePath: import.meta.env.VITE_BASE_PATH || "/",
 };
 
 // Firebase Configuration (if using client-side Firebase)
