@@ -99,16 +99,12 @@ function Unscramble({ gameId, targetWord, onResult }) {
   return (
     <div className="unscramble-comp">
       <img
-        src="/game-genie-1/unscramble-image.png"
+        src="/unscramble-image.png"
         alt="unscramble"
         className="unscramble-img"
       />
       <div className="word-bank">
-        <img
-          src="/game-genie-1/word-bank.png"
-          alt="word-bank"
-          className="word-bank-img"
-        />
+        <img src="/word-bank.png" alt="word-bank" className="word-bank-img" />
         <div className="word-bank-words">
           {scrambledWords.map((word, index) => (
             <span
@@ -154,7 +150,7 @@ function Unscramble({ gameId, targetWord, onResult }) {
         ))}
       </div>
       <button className="check-button" onClick={handleCheck}>
-        <img src="/game-genie-1/check.png" alt="" />
+        <img src="/check.png" alt="" />
       </button>
     </div>
   );

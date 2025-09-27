@@ -107,11 +107,7 @@ function GamePage({
           setIsActualHint={setIsActualHint}
         />
         <div className="genie-container">
-          <img
-            src="/game-genie-1/genie3.png"
-            alt="genie"
-            className="genie-image"
-          />
+          <img src="/genie3.png" alt="genie" className="genie-image" />
           <div className="text-box">
             {gameStatus !== "active" ? (
               <div className="genie-text2 explanation-visible">
@@ -142,7 +138,7 @@ function GamePage({
                   }}
                 >
                   <img
-                    src="/game-genie-1/next-button.png"
+                    src="/next-button.png"
                     alt="next"
                     className="next-image"
                   />
