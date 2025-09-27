@@ -105,7 +105,7 @@ function Grid({
       return;
 
     try {
-      const res = await fetch("http://localhost:8080/openai/guess", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/openai/guess`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ gameId, guess: currentGuess }),
@@ -150,21 +150,27 @@ function Grid({
           setIsActualHint(false);
         } else if (currentRow === 2) {
           const hintLevel = 1;
-          const hintRes = await fetch("http://localhost:8080/openai/hint", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ gameId, hintLevel }),
-          });
+          const hintRes = await fetch(
+            `${import.meta.env.VITE_API_URL}/openai/hint`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ gameId, hintLevel }),
+            }
+          );
           const hintData = await hintRes.json();
           setHint(hintData.hint);
           setIsActualHint(true);
         } else if (currentRow === 4) {
           const hintLevel = 2;
-          const hintRes = await fetch("http://localhost:8080/openai/hint", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ gameId, hintLevel }),
-          });
+          const hintRes = await fetch(
+            `${import.meta.env.VITE_API_URL}/openai/hint`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ gameId, hintLevel }),
+            }
+          );
           const hintData = await hintRes.json();
           setHint(hintData.hint);
           setIsActualHint(true);
@@ -176,7 +182,7 @@ function Grid({
   };
 
   const resetGame = () => {
-    fetch("http://localhost:8080/openai/start", { method: "POST" })
+    fetch(`${import.meta.env.VITE_API_URL}/openai/start`, { method: "POST" })
       .then((res) => res.json())
       .then((data) => {
         setGrid(
