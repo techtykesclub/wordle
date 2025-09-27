@@ -1,23 +1,32 @@
-const express = require('express');
-const cors = require('cors');
-const serverless = require('serverless-http');
-const openaiRoutes = require('../routes/openaiRoutes'); // same routes as before
+const express = require("express");
+const cors = require("cors");
+const serverless = require("serverless-http");
+const openaiRoutes = require("../routes/openaiRoutes");
+require("dotenv").config();
 
 const app = express();
 
-const allowed = [
-  'https://abdulrahman1121.github.io', // or your GH Pages custom domain
-  'https://www.yourdomain.com',           // keep for future Webflow prod
-  'https://<your-webflow-site>.webflow.io'// Webflow staging
-];
-app.use(cors({
-  origin: (origin, cb) => cb(null, !origin || allowed.includes(origin)),
-  credentials: true
-}));
+// Environment-based CORS origins
+const allowed = process.env.CORS_ORIGINS
+  ? process.env.CORS_ORIGINS.split(",").map((origin) => origin.trim())
+  : [
+      "http://localhost:5173", // Vite dev server
+      "http://localhost:5174", // Alternative Vite port
+      "http://localhost:3000", // Alternative local port
+      "https://abdulrahman1121.github.io", // GitHub Pages
+      process.env.FRONTEND_URL, // Production frontend URL
+    ].filter(Boolean); // Remove undefined values
+
+app.use(
+  cors({
+    origin: (origin, cb) => cb(null, !origin || allowed.includes(origin)),
+    credentials: true,
+  })
+);
 
 app.use(express.json());
-app.get('/health', (_req, res) => res.json({ ok: true }));
-// app.use('/openai', openaiRoutes);
+app.get("/health", (_req, res) => res.json({ ok: true }));
+app.use("/openai", openaiRoutes);
 
 // ✅ export a handler instead of listening on a port
 module.exports = serverless(app);

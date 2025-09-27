@@ -1,55 +1,72 @@
-import { useState, useEffect } from 'react';
-import Grid from '../components/Grid.jsx';
-import Keyboard from '../components/Keyboard.jsx';
-import GoBackImage from '../components/GoBackImage.jsx';
-import SettingsImage from '../components/SettingsImage.jsx';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import Grid from "../components/Grid.jsx";
+import Keyboard from "../components/Keyboard.jsx";
+import GoBackImage from "../components/GoBackImage.jsx";
+import SettingsImage from "../components/SettingsImage.jsx";
+import { useNavigate } from "react-router-dom";
 // wherever you call the API
-import { API_BASE } from './config.js';
+import { API_BASE } from "../config.js";
 
-import './GamePage.css';
+import "./GamePage.css";
 
-function GamePage({ onKeyPress, keyStatuses, resetKeyStatuses, gameId, setGameId, setGameStatus, setHint, setExplanation, wordLength, setWordLength, gameStatus, setKeyStatuses, gridKeyPressRef }) {
+function GamePage({
+  onKeyPress,
+  keyStatuses,
+  resetKeyStatuses,
+  gameId,
+  setGameId,
+  setGameStatus,
+  setHint,
+  setExplanation,
+  wordLength,
+  setWordLength,
+  gameStatus,
+  setKeyStatuses,
+  gridKeyPressRef,
+}) {
   const navigate = useNavigate();
-  const [hint, setLocalHint] = useState('');
-  const [explanation, setLocalExplanation] = useState('');
-  const [gameMessage, setGameMessage] = useState('');
-  const [welcomeMessage, setWelcomeMessage] = useState('Welcome to Game Genie, guess a word and I will help u get it right. U got this!');
+  const [hint, setLocalHint] = useState("");
+  const [explanation, setLocalExplanation] = useState("");
+  const [gameMessage, setGameMessage] = useState("");
+  const [welcomeMessage, setWelcomeMessage] = useState(
+    "Welcome to Game Genie, guess a word and I will help u get it right. U got this!"
+  );
   const [isGameReady, setIsGameReady] = useState(false);
   const [guessCount, setGuessCount] = useState(0);
-  const [targetWord, setTargetWord] = useState('');
+  const [targetWord, setTargetWord] = useState("");
   const [isActualHint, setIsActualHint] = useState(false);
 
-
   useEffect(() => {
-    fetch(`${API_BASE}/openai/start`, { method: 'POST' })
-      .then(res => res.json())
-      .then(data => {
+    fetch(`${API_BASE}/openai/start`, { method: "POST" })
+      .then((res) => res.json())
+      .then((data) => {
         setGameId(data.gameId);
         setWordLength(data.wordLength);
-        setGameStatus('active');
+        setGameStatus("active");
         resetKeyStatuses();
         setLocalExplanation(data.explanation);
         setExplanation(data.explanation);
-        setGameMessage('');
-        setLocalHint('');
-        setWelcomeMessage('Welcome to Game Genie, give us your best guess! I will be here to help you along the way!!');
+        setGameMessage("");
+        setLocalHint("");
+        setWelcomeMessage(
+          "Welcome to Game Genie, give us your best guess! I will be here to help you along the way!!"
+        );
         setIsGameReady(true);
         setGuessCount(0);
         setTargetWord(data.word);
         setIsActualHint(false);
       })
-      .catch(err => console.error('Error starting game:', err));
+      .catch((err) => console.error("Error starting game:", err));
   }, []);
 
   const handleGoSelectLevel = () => {
     resetKeyStatuses();
-    navigate('/select-level');
+    navigate("/select-level");
   };
 
   const handleGoHome = () => {
     resetKeyStatuses();
-    navigate('/');
+    navigate("/");
   };
 
   if (!isGameReady) {
@@ -60,7 +77,9 @@ function GamePage({ onKeyPress, keyStatuses, resetKeyStatuses, gameId, setGameId
     );
   }
 
-  const [definition, example] = explanation ? explanation.split('\n') : ['', ''];
+  const [definition, example] = explanation
+    ? explanation.split("\n")
+    : ["", ""];
 
   return (
     <div className="game-page">
@@ -88,27 +107,45 @@ function GamePage({ onKeyPress, keyStatuses, resetKeyStatuses, gameId, setGameId
           setIsActualHint={setIsActualHint}
         />
         <div className="genie-container">
-          <img src="/game-genie-1/genie3.png" alt="genie" className="genie-image" />
+          <img
+            src="/game-genie-1/genie3.png"
+            alt="genie"
+            className="genie-image"
+          />
           <div className="text-box">
-            {gameStatus !== 'active' ? (
+            {gameStatus !== "active" ? (
               <div className="genie-text2 explanation-visible">
-                <p className="game-message">{gameMessage || 'Loading'}</p>
-                <p className="genie-definition"><strong>Definition:</strong> {definition || 'Loading'}</p>
-                <p className="genie-example"><strong>Example:</strong> {example || 'Loading'}</p>
+                <p className="game-message">{gameMessage || "Loading"}</p>
+                <p className="genie-definition">
+                  <strong>Definition:</strong> {definition || "Loading"}
+                </p>
+                <p className="genie-example">
+                  <strong>Example:</strong> {example || "Loading"}
+                </p>
                 <button
                   className="next-button"
                   onClick={() => {
-                    navigate('/rewards', {
+                    navigate("/rewards", {
                       state: {
                         guessCount,
-                        points: gameMessage.startsWith('Nice') ? 0 : guessCount <= 3 ? 30 : guessCount <= 5 ? 20 : 10,
+                        points: gameMessage.startsWith("Nice")
+                          ? 0
+                          : guessCount <= 3
+                          ? 30
+                          : guessCount <= 5
+                          ? 20
+                          : 10,
                         gameId,
                         targetWord,
                       },
                     });
                   }}
                 >
-                  <img src="/game-genie-1/next-button.png" alt="next" className="next-image" />
+                  <img
+                    src="/game-genie-1/next-button.png"
+                    alt="next"
+                    className="next-image"
+                  />
                 </button>
               </div>
             ) : (
@@ -133,9 +170,15 @@ function GamePage({ onKeyPress, keyStatuses, resetKeyStatuses, gameId, setGameId
                   )}
                 </span>
                 <div className="explanation-hidden">
-                  <p className="game-message">{gameMessage || 'Game over!'}</p>
-                  <p className="genie-definition"><strong>Definition:</strong> {definition || 'No definition available'}</p>
-                  <p className="genie-example"><strong>Example:</strong> {example || 'No example available'}</p>
+                  <p className="game-message">{gameMessage || "Game over!"}</p>
+                  <p className="genie-definition">
+                    <strong>Definition:</strong>{" "}
+                    {definition || "No definition available"}
+                  </p>
+                  <p className="genie-example">
+                    <strong>Example:</strong>{" "}
+                    {example || "No example available"}
+                  </p>
                 </div>
               </>
             )}
