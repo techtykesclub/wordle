@@ -7,12 +7,44 @@
       "destination": "/api/start"
     },
     {
+      "source": "/openai/guess",
+      "destination": "/api/guess"
+    },
+    {
+      "source": "/openai/reset",
+      "destination": "/api/reset"
+    },
+    {
+      "source": "/openai/hint",
+      "destination": "/api/hint"
+    },
+    {
+      "source": "/openai/unscramble",
+      "destination": "/api/unscramble"
+    },
+    {
       "source": "/health",
       "destination": "/api/health"
     }
   ],
   "functions": {
     "api/start.js": {
+      "memory": 1024,
+      "maxDuration": 30
+    },
+    "api/guess.js": {
+      "memory": 1024,
+      "maxDuration": 30
+    },
+    "api/reset.js": {
+      "memory": 512,
+      "maxDuration": 10
+    },
+    "api/hint.js": {
+      "memory": 1024,
+      "maxDuration": 30
+    },
+    "api/unscramble.js": {
       "memory": 1024,
       "maxDuration": 30
     },
