@@ -1,22 +1,32 @@
 {
   "version": 2,
   "name": "wordle-game-backend",
-  "rewrites": [
+  "builds": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/index.js"
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/health",
+      "dest": "/api/health.js"
     },
     {
-      "source": "/health",
-      "destination": "/api/index.js"
+      "src": "/test",
+      "dest": "/api/index.js"
     },
     {
-      "source": "/openai/(.*)",
-      "destination": "/api/index.js"
+      "src": "/test-post",
+      "dest": "/api/index.js"
     },
     {
-      "source": "/(.*)",
-      "destination": "/api/index.js"
+      "src": "/openai/(.*)",
+      "dest": "/api/index.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.js"
     }
   ],
   "functions": {
