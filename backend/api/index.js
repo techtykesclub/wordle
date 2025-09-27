@@ -14,6 +14,7 @@ const allowed = process.env.CORS_ORIGINS
       "http://localhost:5174", // Alternative Vite port
       "http://localhost:3000", // Alternative local port
       "https://abdulrahman1121.github.io", // GitHub Pages
+      "https://wordle-rose-eta.vercel.app", // Frontend Vercel deployment
       process.env.FRONTEND_URL, // Production frontend URL
     ].filter(Boolean); // Remove undefined values
 
